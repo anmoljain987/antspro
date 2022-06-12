@@ -6,7 +6,7 @@ import { ApolloProvider, InMemoryCache, ApolloClient } from "@apollo/client";
 
 import "antd/dist/antd.css";
 const client = new ApolloClient({
-  uri: "https://48p1r2roz4.sse.codesandbox.io",
+  uri: "https://todo-list-anmol.herokuapp.com/",
   cache: new InMemoryCache(),
 });
 const root = ReactDOM.createRoot(document.getElementById("root"));

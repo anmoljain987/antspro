@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Button, Input } from "antd";
-import { v4 as uuid } from "uuid";
-
+import { useMutation } from "@apollo/client";
+import { CREATE_TODO, GET_ALL_TODOS } from "../../graphql/Queries";
 function FormComp({ setDataSource }) {
   const initialState = {
     description: "",
     status: false,
-    id: uuid(),
   };
   const [todo, setTodo] = useState(initialState);
+
   const textHandler = (e) => {
     const { name, value } = e.target;
     setTodo((prev) => {
@@ -19,12 +19,18 @@ function FormComp({ setDataSource }) {
     });
   };
   const { description } = todo;
+  const [createTodo, { loading, data }] = useMutation(CREATE_TODO, {
+    refetchQueries: [{ query: GET_ALL_TODOS }, "Todos"],
+  });
+
   const submitHandler = () => {
     if (description.length === 0) return;
-    setTodo((prev) => {
-      return { ...prev, id: uuid() };
-    });
+
     setDataSource((prev) => [...prev, todo]);
+
+    createTodo({
+      variables: { description },
+    });
     setTodo(initialState);
   };
 
