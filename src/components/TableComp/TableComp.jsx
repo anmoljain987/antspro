@@ -8,7 +8,7 @@ function TableComp({ setDataSource, dataSource }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editingTodo, setEditingTodo] = useState(null);
   const { loading, data } = useQuery(GET_ALL_TODOS);
-  const [deleteTodo, { loading: deleteLoad, data: deleteData }] = useMutation(DELETE_TODO, {
+  const [deleteTodo] = useMutation(DELETE_TODO, {
     refetchQueries: [{ query: GET_ALL_TODOS }],
   });
   const [updateTodo] = useMutation(UPDATE_TODO, {
