@@ -47,7 +47,6 @@ function TableComp({ setDataSource, dataSource }) {
     });
   }
   const columns = [
-    { key: "0", title: "id", dataIndex: "id" },
     {
       key: "1",
       title: "Description",
