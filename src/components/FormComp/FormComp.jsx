@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Input } from "antd";
 import { useMutation } from "@apollo/client";
-import { CREATE_TODO, GET_ALL_TODOS } from "../../graphql/Queries";
+import { CREATE_TODO } from "../../graphql/Queries";
 function FormComp({ setDataSource }) {
   const initialState = {
     description: "",
@@ -20,13 +20,13 @@ function FormComp({ setDataSource }) {
   };
   const { description } = todo;
   const [createTodo] = useMutation(CREATE_TODO, {
-    refetchQueries: [{ query: GET_ALL_TODOS }],
+    onCompleted: (e) => {
+      setDataSource((prev) => [...prev, e.createTodo]);
+    },
   });
 
   const submitHandler = () => {
     if (description.length === 0) return;
-
-    setDataSource((prev) => [...prev, todo]);
 
     createTodo({
       variables: { description },

@@ -1,50 +1,55 @@
 import { gql } from "@apollo/client";
+
+export const DATA_VALUE = gql`
+  fragment DATA_VALUE on Todo {
+    id
+    description
+    status
+  }
+`;
 export const GET_ALL_TODOS = gql`
+  ${DATA_VALUE}
   query {
     todos {
-      id
-      description
-      status
-    }
-  }
-`;
-
-export const DELETE_TODO = gql`
-  mutation deleteTodo($id: ID!) {
-    deleteTodo(id: $id) {
-      id
-      description
-      status
-    }
-  }
-`;
-
-export const UPDATE_TODO = gql`
-  mutation updateTodo($id: ID!, $description: String!) {
-    updateTodo(id: $id, description: $description) {
-      id
-      description
-      status
-    }
-  }
-`;
-
-export const CHECKED_TODO = gql`
-  mutation checkedTodo($id: ID!, $status: Boolean!) {
-    checkedTodo(id: $id, status: $status) {
-      id
-      description
-      status
+      ...DATA_VALUE
     }
   }
 `;
 
 export const CREATE_TODO = gql`
+  ${DATA_VALUE}
+
   mutation createTodo($description: String!) {
     createTodo(description: $description) {
-      id
-      description
-      status
+      ...DATA_VALUE
+    }
+  }
+`;
+export const DELETE_TODO = gql`
+  ${DATA_VALUE}
+  mutation deleteTodo($id: ID!) {
+    deleteTodo(id: $id) {
+      ...DATA_VALUE
+    }
+  }
+`;
+
+export const UPDATE_TODO = gql`
+  ${DATA_VALUE}
+
+  mutation updateTodo($id: ID!, $description: String!) {
+    updateTodo(id: $id, description: $description) {
+      ...DATA_VALUE
+    }
+  }
+`;
+
+export const CHECKED_TODO = gql`
+  ${DATA_VALUE}
+
+  mutation checkedTodo($id: ID!, $status: Boolean!) {
+    checkedTodo(id: $id, status: $status) {
+      ...DATA_VALUE
     }
   }
 `;

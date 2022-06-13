@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Switch, Input, Modal, Table, Spin } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useMutation, useQuery } from "@apollo/client";
@@ -7,20 +7,36 @@ import { CHECKED_TODO, DELETE_TODO, GET_ALL_TODOS, UPDATE_TODO } from "../../gra
 function TableComp({ setDataSource, dataSource }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editingTodo, setEditingTodo] = useState(null);
-  const { loading, data } = useQuery(GET_ALL_TODOS);
+  const [deleting, setDelete] = useState("");
+  const { loading } = useQuery(GET_ALL_TODOS, {
+    onCompleted: (e) => {
+      console.log(e.todos);
+      setDataSource(e.todos);
+    },
+  });
   const [deleteTodo] = useMutation(DELETE_TODO, {
-    refetchQueries: [{ query: GET_ALL_TODOS }],
-    onCompleted: (e) => {},
+    onCompleted: (e) => {
+      setDataSource((prev) => prev.filter((el) => el.id !== deleting));
+    },
   });
   const [updateTodo] = useMutation(UPDATE_TODO, {
-    refetchQueries: [{ query: GET_ALL_TODOS }],
+    onCompleted: (e) => {
+      console.log(e);
+
+      const temp = JSON.parse(JSON.stringify(dataSource));
+
+      const editIndex = temp.findIndex((el) => {
+        return el.id === e.updateTodo?.id;
+      });
+
+      if (editIndex) {
+        temp[editIndex] = e.updateTodo;
+        setDataSource(temp);
+      }
+      setEditingTodo(null);
+    },
   });
-  const [checkedTodo] = useMutation(CHECKED_TODO, {
-    refetchQueries: [{ query: GET_ALL_TODOS }],
-  });
-  useEffect(() => {
-    if (!loading) setDataSource(data.todos);
-  }, [loading, data, setDataSource]);
+  const [checkedTodo] = useMutation(CHECKED_TODO);
 
   function switchHandler(e, id, status) {
     checkedTodo({
@@ -31,6 +47,7 @@ function TableComp({ setDataSource, dataSource }) {
     });
   }
   const columns = [
+    { key: "0", title: "id", dataIndex: "id" },
     {
       key: "1",
       title: "Description",
@@ -71,7 +88,7 @@ function TableComp({ setDataSource, dataSource }) {
   function editHandler(record) {
     setIsEditing(true);
     setEditingTodo({ ...record });
-    console.log(record);
+    // console.log(record);
   }
   function deleteHandler(record) {
     Modal.confirm({
@@ -84,7 +101,7 @@ function TableComp({ setDataSource, dataSource }) {
             id: record.id,
           },
         });
-        setDataSource((prev) => prev.filter((el) => el.id !== record.id));
+        setDelete(record.id);
       },
     });
   }
@@ -101,10 +118,6 @@ function TableComp({ setDataSource, dataSource }) {
         description: editingTodo.description,
       },
     });
-    setDataSource((prev) =>
-      prev.map((el) => (el.id === editingTodo?.id ? { ...el, ...editingTodo } : el))
-    );
-    setEditingTodo(null);
   }
 
   return (
