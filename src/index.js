@@ -2,18 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import { ApolloProvider, InMemoryCache, ApolloClient } from "@apollo/client";
 
+import { BrowserRouter } from "react-router-dom";
 import "antd/dist/antd.css";
-const client = new ApolloClient({
-  uri: "https://todo-list-anmol.herokuapp.com/",
-  cache: new InMemoryCache(),
-});
+import ApolloServerComp from "./graphql/ApolloServer";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
+    <ApolloServerComp>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ApolloServerComp>
   </React.StrictMode>
 );

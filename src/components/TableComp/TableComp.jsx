@@ -10,7 +10,6 @@ function TableComp({ setDataSource, dataSource }) {
   const [deleting, setDelete] = useState("");
   const { loading } = useQuery(GET_ALL_TODOS, {
     onCompleted: (e) => {
-      console.log(e.todos);
       setDataSource(e.todos);
     },
   });
@@ -21,8 +20,6 @@ function TableComp({ setDataSource, dataSource }) {
   });
   const [updateTodo] = useMutation(UPDATE_TODO, {
     onCompleted: (e) => {
-      console.log(e);
-
       const temp = JSON.parse(JSON.stringify(dataSource));
 
       const editIndex = temp.findIndex((el) => {
