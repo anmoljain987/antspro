@@ -15,7 +15,7 @@ function NavigationBar() {
           fontSize: "20px",
         }}
       >
-        <div style={{ color: "white" }}>Logo</div>
+        <div style={{ color: "white" }}>Todo-List</div>
         <div
           style={{
             display: "flex",
