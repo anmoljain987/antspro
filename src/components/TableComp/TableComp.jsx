@@ -10,6 +10,7 @@ function TableComp({ setDataSource, dataSource }) {
   const { loading, data } = useQuery(GET_ALL_TODOS);
   const [deleteTodo] = useMutation(DELETE_TODO, {
     refetchQueries: [{ query: GET_ALL_TODOS }],
+    onCompleted: (e) => {},
   });
   const [updateTodo] = useMutation(UPDATE_TODO, {
     refetchQueries: [{ query: GET_ALL_TODOS }],

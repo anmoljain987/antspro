@@ -19,8 +19,8 @@ function FormComp({ setDataSource }) {
     });
   };
   const { description } = todo;
-  const [createTodo, { loading, data }] = useMutation(CREATE_TODO, {
-    refetchQueries: [{ query: GET_ALL_TODOS }, "Todos"],
+  const [createTodo] = useMutation(CREATE_TODO, {
+    refetchQueries: [{ query: GET_ALL_TODOS }],
   });
 
   const submitHandler = () => {
@@ -35,9 +35,13 @@ function FormComp({ setDataSource }) {
   };
 
   return (
-    <Input.Group compact className="App" style={{ marginTop: 50, marginBottom: 50 }}>
+    <Input.Group
+      style={{ display: "flex", width: "100%", marginTop: 50, marginBottom: 50 }}
+      compact
+      className="App"
+    >
       <Input
-        style={{ width: "calc(100% - 400px)" }}
+        style={{ width: "100%" }}
         showCount
         maxLength={100}
         placeholder="Add to List"
