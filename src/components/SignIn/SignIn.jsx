@@ -1,11 +1,9 @@
-import { Button, Checkbox, Form, Input, Card, message } from "antd";
+import { Button, Checkbox, Form, Input, Card } from "antd";
 import React, { useEffect, useState } from "react";
 
 const SignIn = () => {
   const [dataSource, setDataSource] = useState(null);
-  const warning = (mess) => {
-    message.warning(mess);
-  };
+
   useEffect(() => {
     let temp = JSON.parse(localStorage.getItem("user"));
     setDataSource(temp);
@@ -13,14 +11,6 @@ const SignIn = () => {
 
   const [form] = Form.useForm();
   const onFinish = (values) => {
-    if (values?.email.length === 0 || !values.email.includes("@")) {
-      warning("Email is Invalid");
-      return;
-    }
-    if (values?.password.length < 6) {
-      warning("Password is Invalid");
-      return;
-    }
     if (values.remember === true) {
       console.log("yes");
       localStorage.setItem("user", JSON.stringify(dataSource));
