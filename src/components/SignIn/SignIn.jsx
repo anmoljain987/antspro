@@ -16,14 +16,13 @@ const SignIn = () => {
 
   return (
     <Card
-      title="Sign Up"
+      title="Sign In"
       style={{
         width: 700,
         margin: "auto",
         marginTop: 40,
       }}
     >
-      {" "}
       <Form
         form={form}
         name="signup"
