@@ -88,7 +88,6 @@ function TableComp({ setDataSource, dataSource }) {
   function editHandler(record) {
     setIsEditing(true);
     setEditingTodo({ ...record });
-    // console.log(record);
   }
   function deleteHandler(record) {
     Modal.confirm({
