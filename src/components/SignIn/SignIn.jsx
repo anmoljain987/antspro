@@ -1,24 +1,35 @@
-import { Button, Checkbox, Form, Input, Card } from "antd";
-import React, { useEffect, useState } from "react";
+import { Button, Checkbox, Form, Input, Card, message } from "antd";
 
+import React, { useEffect, useState } from "react";
+import { loginFirebase } from "../../utils/utilis";
 const SignIn = () => {
   const [dataSource, setDataSource] = useState(null);
+  const [isSubmitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    let temp = JSON.parse(localStorage.getItem("user"));
-    setDataSource(temp);
-  }, []);
+  // useEffect(() => {
+  //   let temp = JSON.parse(localStorage.getItem("user"));
+  //   setDataSource(temp);
+  // }, []);
 
   const [form] = Form.useForm();
   const onFinish = (values) => {
-    if (values.remember === true) {
-      console.log("yes");
-      localStorage.setItem("user", JSON.stringify(dataSource));
-    } else {
-      localStorage.removeItem("user");
-    }
-    setDataSource(values);
-    form.resetFields();
+    const { email, password } = values;
+
+    // if (values.remember === true) {
+    //   console.log("yes");
+    //   localStorage.setItem("user", JSON.stringify(values));
+    // } else {
+    //   localStorage.removeItem("user");
+    // }
+    loginFirebase(email, password)
+      .then((res) => {
+        console.log(res);
+        // form.resetFields();
+      })
+      .catch((err) => message.error(err.message))
+      .finally((el) => {
+        form.resetFields();
+      });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -61,9 +72,6 @@ const SignIn = () => {
               required: true,
               message: "Please input your Email!",
             },
-            {
-              type: "email",
-            },
           ]}
         >
           <Input />
@@ -77,7 +85,6 @@ const SignIn = () => {
               required: true,
               message: "Please input your password!",
             },
-            { min: 6 },
           ]}
         >
           <Input.Password />
@@ -100,7 +107,7 @@ const SignIn = () => {
             span: 8,
           }}
         >
-          <Button type="primary" htmlType="submit">
+          <Button loading={isSubmitting} type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>

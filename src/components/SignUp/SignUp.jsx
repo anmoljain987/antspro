@@ -1,24 +1,25 @@
-import { Button, Checkbox, Form, Input, Card } from "antd";
+import { Button, Form, Input, Card, message } from "antd";
 import React, { useEffect, useState } from "react";
-
+import { registerFirebase } from "../../utils/utilis";
 const SignIn = () => {
-  const [dataSource, setDataSource] = useState(null);
-
-  useEffect(() => {
-    let temp = JSON.parse(localStorage.getItem("user"));
-    setDataSource(temp);
-  }, []);
+  // const [dataSource, setDataSource] = useState(null);
 
   const [form] = Form.useForm();
+  const [isSubmitting, setSubmitting] = useState(false);
   const onFinish = (values) => {
-    if (values.remember === true) {
-      console.log("yes");
-      localStorage.setItem("user", JSON.stringify(dataSource));
-    } else {
-      localStorage.removeItem("user");
-    }
-    setDataSource(values);
-    form.resetFields();
+    const { email, password } = values;
+    setSubmitting(true);
+    registerFirebase(email, password)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        message.error(err.message);
+      })
+      .finally((el) => {
+        form.resetFields();
+        setSubmitting(false);
+      });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -27,7 +28,7 @@ const SignIn = () => {
 
   return (
     <Card
-      title="Sign In"
+      title="Sign Up"
       style={{
         maxWidth: 700,
         margin: "auto",
@@ -110,23 +111,12 @@ const SignIn = () => {
         </Form.Item>
 
         <Form.Item
-          name="remember"
-          valuePropName="checked"
           wrapperCol={{
-            offset: 8,
-            span: 8,
+            offset: 17,
+            span: 0,
           }}
         >
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
-
-        <Form.Item
-          wrapperCol={{
-            offset: 8,
-            span: 8,
-          }}
-        >
-          <Button style={{ width: "100%" }} type="primary" htmlType="submit">
+          <Button loading={isSubmitting} type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>
