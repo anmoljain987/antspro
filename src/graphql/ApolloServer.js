@@ -4,7 +4,7 @@ import React from "react";
 
 function ApolloServerComp({ children }) {
   const client = new ApolloClient({
-    uri: "https://todo-list-anmol.herokuapp.com/",
+    uri: "http://localhost:2000/",
     cache: new InMemoryCache(),
   });
   return <ApolloProvider client={client}>{children}</ApolloProvider>;

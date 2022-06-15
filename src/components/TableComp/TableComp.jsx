@@ -1,18 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Switch, Input, Modal, Table, Spin } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useMutation, useQuery } from "@apollo/client";
-import { CHECKED_TODO, DELETE_TODO, GET_ALL_TODOS, UPDATE_TODO } from "../../graphql/Queries";
+import { CHECKED_TODO, DELETE_TODO, UPDATE_TODO, USER_TODO } from "../../graphql/Queries";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../Store";
 
 function TableComp({ setDataSource, dataSource }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editingTodo, setEditingTodo] = useState(null);
   const [deleting, setDelete] = useState("");
-  const { loading } = useQuery(GET_ALL_TODOS, {
+  const email = useSelector((state) => state.email);
+
+  const id = useSelector((state) => state.id);
+  const dispatch = useDispatch();
+  const { data, loading } = useQuery(USER_TODO, {
     onCompleted: (e) => {
-      setDataSource(e.todos);
+      // setDataSource(e.userTodo?.todos);
+    },
+    onError: (e) => {
+      console.log(e);
+    },
+    variables: {
+      email,
     },
   });
+  useEffect(() => {
+    setDataSource(data?.userTodo?.todos);
+    dispatch(authActions.login({ id, email }));
+  }, [id, dispatch, data, setDataSource]);
   const [deleteTodo] = useMutation(DELETE_TODO, {
     onCompleted: (e) => {
       setDataSource((prev) => prev.filter((el) => el.id !== deleting));

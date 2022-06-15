@@ -1,15 +1,33 @@
-import { Button, Form, Input, Card, message } from "antd";
+import { Button, Form, Input, Card, message, notification } from "antd";
 import React, { useState } from "react";
 import { registerFirebase } from "../../utils/utilis";
+import { CREATE_USER } from "../../graphql/Queries";
+import { useMutation } from "@apollo/client";
 const SignIn = () => {
   const [form] = Form.useForm();
   const [isSubmitting, setSubmitting] = useState(false);
+  const [createUser] = useMutation(CREATE_USER, {
+    onCompleted: (e) => {
+      console.log("sakdjlahs");
+      console.log("e", e);
+    },
+
+    onError(e) {
+      console.log("rrr", e);
+    },
+  });
   const onFinish = (values) => {
     const { email, password } = values;
     setSubmitting(true);
     registerFirebase(email, password)
       .then((res) => {
+        createUser({
+          variables: {
+            uid: res.user.uid,
+          },
+        });
         console.log(res);
+        console.log("jain", res._tokenResponse.email);
       })
       .catch((err) => {
         message.error(err.message);

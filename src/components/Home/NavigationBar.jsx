@@ -5,10 +5,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { authActions } from "../../Store/index";
 const { Header } = Layout;
 function NavigationBar() {
-  const auth = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.isAuth);
   const dispatch = useDispatch();
-  const authh = useSelector((state) => state.auth);
-  console.log(authh);
+
   const authHandler = () => {
     dispatch(authActions.logout());
   };
@@ -34,17 +33,21 @@ function NavigationBar() {
           }}
         >
           {auth && (
-            <Link onClick={authHandler} style={{ color: "white" }} to={"/"}>
+            <Link onClick={authHandler} style={{ color: "white" }} to={auth && "/"}>
               Logout
             </Link>
           )}
 
-          <Link style={{ color: "white" }} to={"/"}>
-            SignIn
-          </Link>
-          <Link style={{ color: "white" }} to={"signup"}>
-            SignUp
-          </Link>
+          {auth || (
+            <Link style={{ color: "white" }} to={"/"}>
+              SignIn
+            </Link>
+          )}
+          {auth || (
+            <Link style={{ color: "white" }} to={"signup"}>
+              SignUp
+            </Link>
+          )}
         </div>
       </Header>
     </Layout>

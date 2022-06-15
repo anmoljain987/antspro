@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { Button, Input } from "antd";
 import { useMutation } from "@apollo/client";
 import { CREATE_TODO } from "../../graphql/Queries";
+import { useSelector } from "react-redux";
+
 function FormComp({ setDataSource }) {
   const initialState = {
     description: "",
     status: false,
   };
   const [todo, setTodo] = useState(initialState);
+  const id = useSelector((state) => state.id);
 
   const textHandler = (e) => {
     const { name, value } = e.target;
@@ -27,9 +30,9 @@ function FormComp({ setDataSource }) {
 
   const submitHandler = () => {
     if (description.length === 0) return;
-
+    console.log(id);
     createTodo({
-      variables: { description },
+      variables: { description, userId: id },
     });
     setTodo(initialState);
   };
