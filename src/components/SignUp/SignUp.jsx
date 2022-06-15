@@ -1,9 +1,7 @@
 import { Button, Form, Input, Card, message } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { registerFirebase } from "../../utils/utilis";
 const SignIn = () => {
-  // const [dataSource, setDataSource] = useState(null);
-
   const [form] = Form.useForm();
   const [isSubmitting, setSubmitting] = useState(false);
   const onFinish = (values) => {
@@ -16,7 +14,7 @@ const SignIn = () => {
       .catch((err) => {
         message.error(err.message);
       })
-      .finally((el) => {
+      .finally(() => {
         form.resetFields();
         setSubmitting(false);
       });
@@ -116,7 +114,7 @@ const SignIn = () => {
             span: 0,
           }}
         >
-          <Button loading={isSubmitting} type="primary" htmlType="submit">
+          <Button disabled={isSubmitting} loading={isSubmitting} type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>
