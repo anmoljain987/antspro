@@ -1,39 +1,21 @@
 import "./App.css";
 
 import { useState } from "react";
-import ErrorPage from "./components/ErrorPage/ErrorPage";
-import FormComp from "./components/FormComp/FormComp";
-import TableComp from "./components/TableComp/TableComp";
-import SignUp from "./components/SignUp/SignUp";
-import NavigationBar from "./components/Home/NavigationBar";
-import SignIn from "./components/SignIn/SignIn";
-import { Routes, Route } from "react-router-dom";
 
-function Todolist({ dataSource, setDataSource }) {
-  return (
-    <>
-      <FormComp setDataSource={setDataSource} />
-      <TableComp dataSource={dataSource} setDataSource={setDataSource}></TableComp>
-    </>
-  );
-}
+import NavigationBar from "./components/Home/NavigationBar";
+
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./utils/fire";
+import RoutesMain from "./Routes/RoutesMain";
+
 function App() {
+  const [user] = useAuthState(auth);
   const [dataSource, setDataSource] = useState([]);
 
   return (
     <>
       <NavigationBar />
-      <Routes>
-        <Route path="/" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-
-        <Route
-          path="/todolist/:id"
-          element={<Todolist dataSource={dataSource} setDataSource={setDataSource} />}
-        />
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
-      {/* <SignUp /> */}
+      <RoutesMain dataSource={dataSource} setDataSource={setDataSource} />
     </>
   );
 }
