@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import PrivateRoutes from "./PrivateRoutes";
 import AuthRoutes from "./AuthRoutes";
@@ -7,9 +7,21 @@ import SignUp from "../components/SignUp/SignUp";
 import ErrorNotFound from "../components/ErrorPage/ErrorNotFound";
 import ErrorUnAuthorised from "../components/ErrorPage/ErrorUnAuthorised";
 import { Todolist } from "../components/TodoList/TodoList";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "Store";
 function RoutesMain({ dataSource, setDataSource }) {
+  const dispatch = useDispatch();
   const isAuth = useSelector((state) => state.isAuth);
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    if (token === "null") {
+      token = null;
+    }
+    if (token) {
+      dispatch(authActions.login());
+      console.log(isAuth);
+    }
+  }, [dispatch, isAuth]);
   return (
     <Routes>
       <Route element={<AuthRoutes isAuth={isAuth} />}>
@@ -19,11 +31,12 @@ function RoutesMain({ dataSource, setDataSource }) {
 
       <Route element={<PrivateRoutes isAuth={isAuth} />}>
         <Route
-          path="/todolist/"
+          path="/todolist"
           element={<Todolist dataSource={dataSource || null} setDataSource={setDataSource} />}
         ></Route>
       </Route>
-      <Route element={<ErrorUnAuthorised />}></Route>
+
+      <Route element={<ErrorUnAuthorised />} path="/logoutfirst"></Route>
       <Route path="*" element={<ErrorNotFound />} />
     </Routes>
   );

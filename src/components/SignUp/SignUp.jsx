@@ -1,33 +1,23 @@
-import { Button, Form, Input, Card, message, notification } from "antd";
+import { Button, Form, Input, Card, message } from "antd";
 import React, { useState } from "react";
 import { registerFirebase } from "../../utils/utilis";
-import { CREATE_USER } from "../../graphql/Queries";
-import { useMutation } from "@apollo/client";
-const SignIn = () => {
-  const [form] = Form.useForm();
-  const [isSubmitting, setSubmitting] = useState(false);
-  const [createUser] = useMutation(CREATE_USER, {
-    onCompleted: (e) => {
-      console.log("sakdjlahs");
-      console.log("e", e);
-    },
 
-    onError(e) {
-      console.log("rrr", e);
-    },
-  });
+import { useDispatch } from "react-redux";
+import { authActions } from "Store";
+
+const SignUp = () => {
+  const [form] = Form.useForm();
+
+  const [isSubmitting, setSubmitting] = useState(false);
+
+  const dispatch = useDispatch();
+
   const onFinish = (values) => {
     const { email, password } = values;
     setSubmitting(true);
     registerFirebase(email, password)
       .then((res) => {
-        createUser({
-          variables: {
-            uid: res.user.uid,
-          },
-        });
-        console.log(res);
-        console.log("jain", res._tokenResponse.email);
+        dispatch(authActions.login());
       })
       .catch((err) => {
         message.error(err.message);
@@ -46,7 +36,7 @@ const SignIn = () => {
     <Card
       title="Sign Up"
       style={{
-        maxWidth: 700,
+        maxWidth: 500,
         margin: "auto",
         marginTop: 40,
       }}
@@ -54,13 +44,7 @@ const SignIn = () => {
       <Form
         form={form}
         name="signup"
-        labelCol={{
-          span: 6,
-        }}
-        wrapperCol={{
-          span: 14,
-        }}
-        layout="horizontal"
+        layout="vertical"
         initialValues={{
           remember: true,
           size: "componentSize",
@@ -126,12 +110,7 @@ const SignIn = () => {
           <Input.Password />
         </Form.Item>
 
-        <Form.Item
-          wrapperCol={{
-            offset: 17,
-            span: 0,
-          }}
-        >
+        <Form.Item>
           <Button disabled={isSubmitting} loading={isSubmitting} type="primary" htmlType="submit">
             Submit
           </Button>
@@ -141,4 +120,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

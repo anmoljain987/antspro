@@ -1,23 +1,29 @@
 import { Button, Checkbox, Form, Input, Card, message } from "antd";
-import { useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
+
 import { loginFirebase } from "../../utils/utilis";
-import { authActions } from "../../Store";
+
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "Store";
 
 const SignIn = () => {
   const [isSubmitting, setSubmitting] = useState(false);
-  const [dataSource, setDataSource] = useState(null);
+  const isAuth = useSelector((state) => state.isAuth);
   const dispatch = useDispatch();
-  const [form] = Form.useForm();
   const navigate = useNavigate();
+  const [form] = Form.useForm();
+  useEffect(() => {
+    if (isAuth) {
+      navigate("todolist");
+    }
+  }, [isAuth, navigate]);
   const onFinish = (values) => {
     const { email, password } = values;
     setSubmitting(true);
     loginFirebase(email, password)
       .then((res) => {
-        console.log(res);
-        setDataSource(res._tokenResponse);
+        dispatch(authActions.login());
       })
 
       .catch((err) => message.error(err.message))
@@ -28,17 +34,8 @@ const SignIn = () => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("error on signin", errorInfo.message);
+    message.error(errorInfo.message);
   };
-  useEffect(() => {
-    if (dataSource?.email) {
-      dispatch(authActions.login({ email: dataSource?.email }));
-      navigate(`/todolist/${dataSource.email}`);
-    }
-    return () => {
-      setDataSource(null);
-    };
-  }, [dataSource, dispatch, navigate]);
   return (
     <Card
       title="Sign In"

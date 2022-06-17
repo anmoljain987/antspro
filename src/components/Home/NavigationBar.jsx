@@ -7,9 +7,11 @@ const { Header } = Layout;
 function NavigationBar() {
   const isAuth = useSelector((state) => state.isAuth);
   const dispatch = useDispatch();
+
   const authHandler = () => {
     logoutFire();
     dispatch(authActions.logout());
+    localStorage.setItem("token", "null");
   };
   return (
     <Layout className="layout">

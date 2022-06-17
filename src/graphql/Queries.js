@@ -7,32 +7,37 @@ export const DATA_VALUE = gql`
     status
   }
 `;
-export const GET_ALL_TODOS = gql`
-  ${DATA_VALUE}
-  query {
-    todos {
-      ...DATA_VALUE
+
+export const CREATE_USER = gql`
+  mutation createUser {
+    createUser {
+      id
+      uid
     }
   }
 `;
 
-export const CREATE_TODO = gql`
-  mutation createTodo($description: String!, $userId: ID!) {
-    createTodo(description: $description, userId: $userId) {
+export const USER_TODO = gql`
+  ${DATA_VALUE}
+  query userTodo {
+    userTodo {
       id
-      description
-      status
-      userId {
-        id
+      uid
+      todos {
+        ...DATA_VALUE
       }
     }
   }
 `;
-export const DELETE_TODO = gql`
-  ${DATA_VALUE}
-  mutation deleteTodo($id: ID!) {
-    deleteTodo(id: $id) {
-      ...DATA_VALUE
+export const CREATE_TODO = gql`
+  mutation createTodo($description: String!) {
+    createTodo(description: $description) {
+      id
+      description
+      status
+      user {
+        id
+      }
     }
   }
 `;
@@ -57,24 +62,11 @@ export const CHECKED_TODO = gql`
   }
 `;
 
-export const USER_TODO = gql`
+export const DELETE_TODO = gql`
   ${DATA_VALUE}
-  query userTodo($email: String!) {
-    userTodo(email: $email) {
-      id
-      email
-      todos {
-        ...DATA_VALUE
-      }
-    }
-  }
-`;
-
-export const CREATE_USER = gql`
-  mutation createUser($uid: String!) {
-    createUser(uid: $uid) {
-      id
-      uid
+  mutation deleteTodo($id: ID!) {
+    deleteTodo(id: $id) {
+      ...DATA_VALUE
     }
   }
 `;
