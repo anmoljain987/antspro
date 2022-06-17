@@ -1,2 +1,3 @@
-# TodoList - CRUD operation with Login and Signup with GraphQl and MongoDb
+# TodoList - GraphQl 
 
+TodoList - CRUD operation with Login and Signup with GraphQl and MongoDb
