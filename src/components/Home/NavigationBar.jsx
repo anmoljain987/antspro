@@ -1,13 +1,15 @@
 import { Layout } from "antd";
 import { Link } from "react-router-dom";
 import { logoutFire } from "utils/utilis";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "Store";
 const { Header } = Layout;
 function NavigationBar() {
   const isAuth = useSelector((state) => state.isAuth);
-
+  const dispatch = useDispatch();
   const authHandler = () => {
     logoutFire();
+    dispatch(authActions.logout());
   };
   return (
     <Layout className="layout">
