@@ -2,15 +2,20 @@ import "./App.css";
 
 import { useState } from "react";
 
-import FormComp from "./components/FormComp/FormComp";
-import TableComp from "./components/TableComp/TableComp";
+import NavigationBar from "./components/Home/NavigationBar";
+
+// import { useAuthState } from "react-firebase-hooks/auth";
+// import { auth } from "./utils/fire";
+import RoutesMain from "./Routes/RoutesMain";
+
 function App() {
+  // const [user] = useAuthState(auth);
   const [dataSource, setDataSource] = useState([]);
 
   return (
     <>
-      <FormComp setDataSource={setDataSource} />
-      <TableComp dataSource={dataSource} setDataSource={setDataSource}></TableComp>
+      <NavigationBar />
+      <RoutesMain dataSource={dataSource} setDataSource={setDataSource} />
     </>
   );
 }

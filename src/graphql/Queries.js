@@ -7,29 +7,37 @@ export const DATA_VALUE = gql`
     status
   }
 `;
-export const GET_ALL_TODOS = gql`
-  ${DATA_VALUE}
-  query {
-    todos {
-      ...DATA_VALUE
+
+export const CREATE_USER = gql`
+  mutation createUser {
+    createUser {
+      id
+      uid
     }
   }
 `;
 
-export const CREATE_TODO = gql`
+export const USER_TODO = gql`
   ${DATA_VALUE}
-
+  query userTodo {
+    userTodo {
+      id
+      uid
+      todos {
+        ...DATA_VALUE
+      }
+    }
+  }
+`;
+export const CREATE_TODO = gql`
   mutation createTodo($description: String!) {
     createTodo(description: $description) {
-      ...DATA_VALUE
-    }
-  }
-`;
-export const DELETE_TODO = gql`
-  ${DATA_VALUE}
-  mutation deleteTodo($id: ID!) {
-    deleteTodo(id: $id) {
-      ...DATA_VALUE
+      id
+      description
+      status
+      user {
+        id
+      }
     }
   }
 `;
@@ -49,6 +57,15 @@ export const CHECKED_TODO = gql`
 
   mutation checkedTodo($id: ID!, $status: Boolean!) {
     checkedTodo(id: $id, status: $status) {
+      ...DATA_VALUE
+    }
+  }
+`;
+
+export const DELETE_TODO = gql`
+  ${DATA_VALUE}
+  mutation deleteTodo($id: ID!) {
+    deleteTodo(id: $id) {
       ...DATA_VALUE
     }
   }

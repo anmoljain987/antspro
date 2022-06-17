@@ -1,28 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Switch, Input, Modal, Table, Spin } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { useMutation, useQuery } from "@apollo/client";
-import { CHECKED_TODO, DELETE_TODO, GET_ALL_TODOS, UPDATE_TODO } from "../../graphql/Queries";
+import { useLazyQuery, useMutation } from "@apollo/client";
+import { CHECKED_TODO, DELETE_TODO, UPDATE_TODO, USER_TODO } from "../../graphql/Queries";
 
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../utils/fire";
 function TableComp({ setDataSource, dataSource }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editingTodo, setEditingTodo] = useState(null);
   const [deleting, setDelete] = useState("");
-  const { loading } = useQuery(GET_ALL_TODOS, {
+
+  const [user] = useAuthState(auth);
+
+  const [getAllTodos, { data, loading }] = useLazyQuery(USER_TODO, {
     onCompleted: (e) => {
-      console.log(e.todos);
-      setDataSource(e.todos);
+      setDataSource(e.userTodo?.todos);
+    },
+    onError: (e) => {
+      console.log("error on TableComp", e);
     },
   });
+  useEffect(() => {
+    if (user) {
+      getAllTodos();
+
+      setDataSource(data?.userTodo?.todos);
+    }
+  }, [user, getAllTodos, setDataSource, data]);
   const [deleteTodo] = useMutation(DELETE_TODO, {
     onCompleted: (e) => {
       setDataSource((prev) => prev.filter((el) => el.id !== deleting));
     },
   });
+
   const [updateTodo] = useMutation(UPDATE_TODO, {
     onCompleted: (e) => {
-      console.log(e);
-
       const temp = JSON.parse(JSON.stringify(dataSource));
 
       const editIndex = temp.findIndex((el) => {
@@ -36,6 +49,7 @@ function TableComp({ setDataSource, dataSource }) {
       setEditingTodo(null);
     },
   });
+
   const [checkedTodo] = useMutation(CHECKED_TODO);
 
   function switchHandler(e, id, status) {
