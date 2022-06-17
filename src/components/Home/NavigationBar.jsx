@@ -1,15 +1,13 @@
 import { Layout } from "antd";
-import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { authActions } from "../../Store/index";
+import { logoutFire } from "utils/utilis";
+import { useSelector } from "react-redux";
 const { Header } = Layout;
 function NavigationBar() {
-  const auth = useSelector((state) => state.isAuth);
-  const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.isAuth);
 
   const authHandler = () => {
-    dispatch(authActions.logout());
+    logoutFire();
   };
   return (
     <Layout className="layout">
@@ -32,22 +30,22 @@ function NavigationBar() {
             fontSize: "20px",
           }}
         >
-          {auth && (
-            <Link onClick={authHandler} style={{ color: "white" }} to={auth && "/"}>
+          {isAuth ? (
+            <Link onClick={authHandler} style={{ color: "white" }} to={"/"}>
               Logout
             </Link>
-          )}
+          ) : null}
 
-          {auth || (
-            <Link style={{ color: "white" }} to={"/"}>
-              SignIn
-            </Link>
-          )}
-          {auth || (
-            <Link style={{ color: "white" }} to={"signup"}>
-              SignUp
-            </Link>
-          )}
+          {!isAuth ? (
+            <>
+              <Link style={{ color: "white" }} to={"/"}>
+                SignIn
+              </Link>
+              <Link style={{ color: "white" }} to={"signup"}>
+                SignUp
+              </Link>
+            </>
+          ) : null}
         </div>
       </Header>
     </Layout>
