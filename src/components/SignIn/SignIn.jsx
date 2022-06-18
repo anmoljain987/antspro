@@ -48,7 +48,7 @@ const SignIn = () => {
   };
   return (
     <Card
-      title={<Title style={{ textAlign: "center" }}>Sign in</Title>}
+      title={<Title style={{ textAlign: "center" }}>Login</Title>}
       style={{
         maxWidth: 500,
         margin: "auto",
@@ -79,7 +79,7 @@ const SignIn = () => {
               },
             ]}
           >
-            <Input />
+            <Input style={{ borderRadius: "10px 10px 10px" }} />
           </Form.Item>
 
           <Form.Item
@@ -92,7 +92,7 @@ const SignIn = () => {
               },
             ]}
           >
-            <Input.Password />
+            <Input.Password style={{ borderRadius: "10px 10px 10px" }} />
           </Form.Item>
           <div style={{ display: "flex", marginTop: 50, justifyContent: "space-between" }}>
             <Form.Item>
@@ -109,7 +109,7 @@ const SignIn = () => {
                 type="primary"
                 htmlType="submit"
               >
-                Submit
+                Sign-In
               </Button>
             </Form.Item>
           </div>

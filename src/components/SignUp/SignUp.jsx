@@ -75,7 +75,7 @@ const SignUp = () => {
             ]}
             hasFeedback
           >
-            <Input />
+            <Input style={{ borderRadius: "10px 10px 10px" }} />
           </Form.Item>
 
           <Form.Item
@@ -94,7 +94,7 @@ const SignUp = () => {
             ]}
             hasFeedback
           >
-            <Input.Password />
+            <Input.Password style={{ borderRadius: "10px 10px 10px" }} />
           </Form.Item>
           <Form.Item
             label="Confirm Password"
@@ -116,7 +116,7 @@ const SignUp = () => {
             ]}
             hasFeedback
           >
-            <Input.Password />
+            <Input.Password style={{ borderRadius: "10px 10px 10px" }} />
           </Form.Item>
 
           <Form.Item style={{ textAlign: "right", marginTop: 50 }}>
@@ -127,7 +127,7 @@ const SignUp = () => {
               type="primary"
               htmlType="submit"
             >
-              Submit
+              Sign-Up
             </Button>
           </Form.Item>
         </Form>
