@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Input, message } from "antd";
 import { useMutation } from "@apollo/client";
 import { CREATE_TODO } from "../../graphql/Queries";
