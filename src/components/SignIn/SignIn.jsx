@@ -6,6 +6,7 @@ import { loginFirebase } from "../../utils/utilis";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "Store";
+
 const { Title } = Typography;
 const SignIn = () => {
   const [isSubmitting, setSubmitting] = useState(false);
@@ -56,7 +57,6 @@ const SignIn = () => {
     >
       <Spin spinning={loading}>
         <Form
-          style={{ width: "" }}
           layout="vertical"
           form={form}
           name="signin"
