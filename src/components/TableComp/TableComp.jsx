@@ -74,9 +74,9 @@ function TableComp({ setDataSource, dataSource }) {
         return (
           <Switch
             onChange={(e) => switchHandler(e, record.id, record.status)}
-            checkedChildren="Completed"
-            unCheckedChildren="Not Completed"
-            style={{ width: 200 }}
+            checkedChildren={<p>Completed</p>}
+            unCheckedChildren={<p>Not Completed</p>}
+            style={{ width: 100, fontSize: "10px" }}
             defaultChecked={record.status}
           />
         );
@@ -136,6 +136,7 @@ function TableComp({ setDataSource, dataSource }) {
     <>
       <Spin spinning={loading} tip="Loading">
         <Table
+          style={{ width: "100%", overflowX: "scroll" }}
           columns={columns}
           dataSource={dataSource}
           rowKey="id"

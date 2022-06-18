@@ -19,7 +19,6 @@ function RoutesMain({ dataSource, setDataSource }) {
     }
     if (token) {
       dispatch(authActions.login());
-      console.log(isAuth);
     }
   }, [dispatch, isAuth]);
   return (

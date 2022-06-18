@@ -1,9 +1,10 @@
-import { Button, Form, Input, Card, message } from "antd";
+import { Button, Form, Input, Card, message, Typography } from "antd";
 import React, { useState } from "react";
 import { registerFirebase } from "../../utils/utilis";
 
 import { useDispatch } from "react-redux";
 import { authActions } from "Store";
+const { Title } = Typography;
 
 const SignUp = () => {
   const [form] = Form.useForm();
@@ -34,7 +35,7 @@ const SignUp = () => {
 
   return (
     <Card
-      title="Sign Up"
+      title={<Title style={{ textAlign: "center" }}>Sign Up</Title>}
       style={{
         maxWidth: 500,
         margin: "auto",
@@ -110,7 +111,7 @@ const SignUp = () => {
           <Input.Password />
         </Form.Item>
 
-        <Form.Item>
+        <Form.Item style={{ textAlign: "right" }}>
           <Button disabled={isSubmitting} loading={isSubmitting} type="primary" htmlType="submit">
             Submit
           </Button>

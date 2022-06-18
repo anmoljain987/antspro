@@ -1,5 +1,4 @@
 import { Button, Result } from "antd";
-import React from "react";
 import { Link } from "react-router-dom";
 
 const ErrorUnAuthorised = () => (
