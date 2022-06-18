@@ -76,6 +76,7 @@ const SignIn = () => {
             <Form.Item
               label={<h2 style={{ fontWeight: 400 }}>Email</h2>}
               name="email"
+              requiredMark="hidden"
               rules={[
                 {
                   required: true,
@@ -89,6 +90,7 @@ const SignIn = () => {
             <Form.Item
               label={<h2 style={{ fontWeight: 400 }}>Password</h2>}
               name="password"
+              requiredMark="hidden"
               rules={[
                 {
                   required: true,

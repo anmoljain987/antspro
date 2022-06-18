@@ -65,6 +65,7 @@ const SignUp = () => {
           size="large"
         >
           <Form.Item
+            requiredMark="hidden"
             label={<h2 style={{ fontWeight: 400 }}>Email</h2>}
             name="email"
             rules={[
@@ -80,6 +81,7 @@ const SignUp = () => {
           </Form.Item>
 
           <Form.Item
+            requiredMark="hidden"
             label={<h2 style={{ fontWeight: 400 }}>Password</h2>}
             name="password"
             rules={[
@@ -98,6 +100,7 @@ const SignUp = () => {
             <Input.Password style={{ borderRadius: "10px 10px 10px" }} />
           </Form.Item>
           <Form.Item
+            requiredMark="hidden"
             label={<h2 style={{ fontWeight: 400 }}>Confirm Password</h2>}
             name="confirm"
             dependencies={["password"]}
