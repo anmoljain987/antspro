@@ -20,7 +20,7 @@ function NavigationBar() {
           display: "flex",
 
           justifyContent: "space-between",
-          gap: "50px",
+          gap: "20px",
           fontSize: "20px",
         }}
       >

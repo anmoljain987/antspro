@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input, Card, message, Typography } from "antd";
+import { Button, Form, Input, Card, message, Typography, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 
 import { loginFirebase } from "../../utils/utilis";
@@ -10,6 +10,7 @@ const { Title } = Typography;
 const SignIn = () => {
   const [isSubmitting, setSubmitting] = useState(false);
   const isAuth = useSelector((state) => state.isAuth);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
@@ -18,6 +19,14 @@ const SignIn = () => {
       navigate("todolist");
     }
   }, [isAuth, navigate]);
+  useEffect(() => {
+    const interval = setTimeout(() => {
+      setLoading(false);
+    }, 500);
+    return () => {
+      clearTimeout(interval);
+    };
+  }, []);
   const onFinish = (values) => {
     const { email, password } = values;
     setSubmitting(true);
@@ -45,62 +54,54 @@ const SignIn = () => {
         marginTop: 40,
       }}
     >
-      <Form
-        style={{ width: "" }}
-        layout="vertical"
-        form={form}
-        name="signin"
-        initialValues={{
-          remember: true,
-          size: "componentSize",
-        }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="on"
-        size="large"
-      >
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Email!",
-            },
-          ]}
+      <Spin spinning={loading}>
+        <Form
+          style={{ width: "" }}
+          layout="vertical"
+          form={form}
+          name="signin"
+          initialValues={{
+            remember: true,
+            size: "componentSize",
+          }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+          size="large"
         >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your password!",
-            },
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-        <div style={{ textAlign: "right" }}>
-          <Form.Item name="remember" valuePropName="checked">
-            <Checkbox>Remember me</Checkbox>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Email!",
+              },
+            ]}
+          >
+            <Input />
           </Form.Item>
-          <Form.Item>
-            <Button
-              disabled={isSubmitting}
-              style={{}}
-              loading={isSubmitting}
-              type="primary"
-              htmlType="submit"
-            >
+
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your password!",
+              },
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
+
+          <Form.Item style={{ textAlign: "right", marginTop: 50 }}>
+            <Button disabled={isSubmitting} loading={isSubmitting} type="primary" htmlType="submit">
               Submit
             </Button>
           </Form.Item>
-        </div>
-      </Form>
+        </Form>
+      </Spin>
     </Card>
   );
 };
