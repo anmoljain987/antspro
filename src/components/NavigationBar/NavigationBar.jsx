@@ -43,7 +43,7 @@ function NavigationBar() {
           {!isAuth ? (
             <>
               <Link style={{ color: "white" }} to={"/"}>
-                SignIn
+                Login
               </Link>
               <Link style={{ color: "white" }} to={"signup"}>
                 SignUp

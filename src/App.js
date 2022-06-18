@@ -2,7 +2,7 @@ import "./App.css";
 
 import { useState } from "react";
 
-import NavigationBar from "./components/Home/NavigationBar";
+import NavigationBar from "./components/NavigationBar/NavigationBar";
 import RoutesMain from "./Routes/RoutesMain";
 
 function App() {
