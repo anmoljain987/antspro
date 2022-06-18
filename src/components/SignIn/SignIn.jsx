@@ -1,8 +1,8 @@
 import { Button, Form, Input, Card, message, Typography, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 
-import { loginFirebase } from "../../utils/utilis";
-
+import { loginFirebase, googleLogin } from "../../utils/utilis";
+import { GoogleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "Store";
@@ -48,7 +48,7 @@ const SignIn = () => {
   };
   return (
     <Card
-      title={<Title style={{ textAlign: "center" }}>Sign in</Title>}
+      title={<Title style={{ textAlign: "center" }}>Login</Title>}
       style={{
         maxWidth: 500,
         margin: "auto",
@@ -79,7 +79,7 @@ const SignIn = () => {
               },
             ]}
           >
-            <Input />
+            <Input style={{ borderRadius: "10px 10px 10px" }} />
           </Form.Item>
 
           <Form.Item
@@ -92,14 +92,27 @@ const SignIn = () => {
               },
             ]}
           >
-            <Input.Password />
+            <Input.Password style={{ borderRadius: "10px 10px 10px" }} />
           </Form.Item>
-
-          <Form.Item style={{ textAlign: "right", marginTop: 50 }}>
-            <Button disabled={isSubmitting} loading={isSubmitting} type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
+          <div style={{ display: "flex", marginTop: 50, justifyContent: "space-between" }}>
+            <Form.Item>
+              <Button shape="round" type="error" onClick={googleLogin}>
+                <GoogleOutlined style={{ color: "orange" }} />
+                Sign-in with Google
+              </Button>
+            </Form.Item>
+            <Form.Item>
+              <Button
+                shape="round"
+                disabled={isSubmitting}
+                loading={isSubmitting}
+                type="primary"
+                htmlType="submit"
+              >
+                Sign-In
+              </Button>
+            </Form.Item>
+          </div>
         </Form>
       </Spin>
     </Card>
