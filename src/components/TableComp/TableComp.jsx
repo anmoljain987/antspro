@@ -75,7 +75,7 @@ function TableComp({ setDataSource, dataSource }) {
           <Switch
             onChange={(e) => switchHandler(e, record.id, record.status)}
             checkedChildren={<p>Completed</p>}
-            unCheckedChildren={<p>Not Completed</p>}
+            unCheckedChildren={<p>CompleteIt</p>}
             style={{ width: 100, fontSize: "10px" }}
             defaultChecked={record.status}
           />
