@@ -120,7 +120,13 @@ const SignUp = () => {
           </Form.Item>
 
           <Form.Item style={{ textAlign: "right", marginTop: 50 }}>
-            <Button disabled={isSubmitting} loading={isSubmitting} type="primary" htmlType="submit">
+            <Button
+              shape="round"
+              disabled={isSubmitting}
+              loading={isSubmitting}
+              type="primary"
+              htmlType="submit"
+            >
               Submit
             </Button>
           </Form.Item>

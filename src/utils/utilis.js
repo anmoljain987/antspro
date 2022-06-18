@@ -3,6 +3,8 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
   signOut,
 } from "firebase/auth";
 
@@ -23,7 +25,10 @@ export function registerFirebase(email, password) {
 export function loginFirebase(email, password) {
   return signInWithEmailAndPassword(auth, email, password);
 }
-
+const provider = new GoogleAuthProvider();
+export function googleLogin() {
+  signInWithPopup(auth, provider);
+}
 export function logoutFire() {
   return signOut(auth);
 }
