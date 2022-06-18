@@ -53,6 +53,7 @@ const SignIn = () => {
       <Card
         title={<Title style={{ textAlign: "center" }}>Login</Title>}
         style={{
+          borderRadius: "30px 30px 30px",
           maxWidth: 500,
           margin: "auto",
           marginTop: 40,
