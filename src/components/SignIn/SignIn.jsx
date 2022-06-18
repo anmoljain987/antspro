@@ -1,4 +1,4 @@
-import { Button, Form, Input, Card, message, Typography, Spin } from "antd";
+import { Button, Form, Input, Card, message, Typography, Spin, Layout } from "antd";
 import React, { useEffect, useState } from "react";
 
 import { loginFirebase, googleLogin } from "../../utils/utilis";
@@ -6,10 +6,12 @@ import { GoogleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "Store";
-
+import PassAction from "./PassAction";
+const { Footer } = Layout;
 const { Title } = Typography;
 const SignIn = () => {
   const [isSubmitting, setSubmitting] = useState(false);
+
   const isAuth = useSelector((state) => state.isAuth);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
@@ -47,75 +49,83 @@ const SignIn = () => {
     message.error(errorInfo.message);
   };
   return (
-    <Card
-      title={<Title style={{ textAlign: "center" }}>Login</Title>}
-      style={{
-        maxWidth: 500,
-        margin: "auto",
-        marginTop: 40,
-      }}
-    >
-      <Spin spinning={loading}>
-        <Form
-          layout="vertical"
-          form={form}
-          name="signin"
-          initialValues={{
-            remember: true,
-            size: "componentSize",
-          }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-          size="large"
-        >
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[
-              {
-                required: true,
-                message: "Please input your Email!",
-              },
-            ]}
+    <>
+      <Card
+        title={<Title style={{ textAlign: "center" }}>Login</Title>}
+        style={{
+          maxWidth: 500,
+          margin: "auto",
+          marginTop: 40,
+        }}
+      >
+        <Spin spinning={loading}>
+          <Form
+            layout="vertical"
+            form={form}
+            name="signin"
+            initialValues={{
+              remember: true,
+              size: "componentSize",
+            }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
+            size="large"
           >
-            <Input style={{ borderRadius: "10px 10px 10px" }} />
-          </Form.Item>
+            <Form.Item
+              label={<h2 style={{ fontWeight: 400 }}>Email</h2>}
+              name="email"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your Email!",
+                },
+              ]}
+            >
+              <Input placeholder="Enter your email" style={{ borderRadius: "10px 10px 10px" }} />
+            </Form.Item>
 
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
-          >
-            <Input.Password style={{ borderRadius: "10px 10px 10px" }} />
-          </Form.Item>
-          <div style={{ display: "flex", marginTop: 50, justifyContent: "space-between" }}>
-            <Form.Item>
-              <Button shape="round" type="error" onClick={googleLogin}>
-                <GoogleOutlined style={{ color: "orange" }} />
-                Sign-in with Google
-              </Button>
+            <Form.Item
+              label={<h2 style={{ fontWeight: 400 }}>Password</h2>}
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your password!",
+                },
+              ]}
+            >
+              <Input.Password
+                placeholder="Enter your password"
+                style={{ borderRadius: "10px 10px 10px" }}
+              />
             </Form.Item>
-            <Form.Item>
-              <Button
-                shape="round"
-                disabled={isSubmitting}
-                loading={isSubmitting}
-                type="primary"
-                htmlType="submit"
-              >
-                Sign-In
-              </Button>
-            </Form.Item>
-          </div>
-        </Form>
-      </Spin>
-    </Card>
+            <div style={{ display: "flex", marginTop: 50, justifyContent: "space-between" }}>
+              <Form.Item>
+                <Button shape="round" type="error" onClick={googleLogin}>
+                  <GoogleOutlined style={{ color: "orange" }} />
+                  Sign-in with Google
+                </Button>
+              </Form.Item>
+              <Form.Item>
+                <Button
+                  shape="round"
+                  disabled={isSubmitting}
+                  loading={isSubmitting}
+                  type="primary"
+                  htmlType="submit"
+                >
+                  Sign-In
+                </Button>
+              </Form.Item>
+            </div>
+          </Form>
+        </Spin>
+        <Footer style={{ backgroundColor: "white" }}>
+          <PassAction />
+        </Footer>
+      </Card>
+    </>
   );
 };
 

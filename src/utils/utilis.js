@@ -6,8 +6,9 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
+  sendPasswordResetEmail,
 } from "firebase/auth";
-
+import { message } from "antd";
 onAuthStateChanged(auth, function (user) {
   console.log("OnStateChange", user);
   if (user) {
@@ -31,4 +32,14 @@ export function googleLogin() {
 }
 export function logoutFire() {
   return signOut(auth);
+}
+
+export function resetPassword(email) {
+  sendPasswordResetEmail(auth, email)
+    .then(() => {
+      message.success("Reset Link Sent");
+    })
+    .catch((err) => {
+      message.error(err.message);
+    });
 }

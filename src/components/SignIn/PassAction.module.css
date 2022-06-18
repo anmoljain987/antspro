@@ -1,0 +1,10 @@
+.button {
+  background-color: transparent;
+  transition: ease-in-out 0.3s;
+  outline: none;
+  border: none;
+}
+.button:hover {
+  cursor: pointer;
+  color: rgb(80, 203, 255);
+}

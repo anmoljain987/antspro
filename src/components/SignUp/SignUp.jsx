@@ -64,7 +64,7 @@ const SignUp = () => {
           size="large"
         >
           <Form.Item
-            label="Email"
+            label={<h2 style={{ fontWeight: 400 }}>Email</h2>}
             name="email"
             rules={[
               {
@@ -75,11 +75,11 @@ const SignUp = () => {
             ]}
             hasFeedback
           >
-            <Input style={{ borderRadius: "10px 10px 10px" }} />
+            <Input placeholder="Enter your email" style={{ borderRadius: "10px 10px 10px" }} />
           </Form.Item>
 
           <Form.Item
-            label="Password"
+            label={<h2 style={{ fontWeight: 400 }}>Password</h2>}
             name="password"
             rules={[
               {
@@ -97,7 +97,7 @@ const SignUp = () => {
             <Input.Password style={{ borderRadius: "10px 10px 10px" }} />
           </Form.Item>
           <Form.Item
-            label="Confirm Password"
+            label={<h2 style={{ fontWeight: 400 }}>Confirm Password</h2>}
             name="confirm"
             dependencies={["password"]}
             rules={[
@@ -116,15 +116,18 @@ const SignUp = () => {
             ]}
             hasFeedback
           >
-            <Input.Password style={{ borderRadius: "10px 10px 10px" }} />
+            <Input.Password
+              placeholder="Re-enter your password"
+              style={{ borderRadius: "10px 10px 10px" }}
+            />
           </Form.Item>
 
           <Form.Item style={{ textAlign: "right", marginTop: 50 }}>
             <Button
-              shape="round"
-              disabled={isSubmitting}
-              loading={isSubmitting}
               type="primary"
+              shape="round"
+              loading={isSubmitting}
+              disabled={isSubmitting}
               htmlType="submit"
             >
               Sign-Up
