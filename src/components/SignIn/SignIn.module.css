@@ -1,0 +1,13 @@
+@media (max-width: 400px) {
+  .hidden {
+    display: none !important;
+    border-radius: 50% !important;
+    padding-bottom: 15px !important;
+  }
+  .googleOutlined {
+    transform: translateY(-3px) !important;
+  }
+  .google_button {
+    padding: 10px !important;
+  }
+}

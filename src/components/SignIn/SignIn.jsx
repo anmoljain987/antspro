@@ -1,6 +1,6 @@
 import { Button, Form, Input, Card, message, Typography, Spin, Layout } from "antd";
 import React, { useEffect, useState } from "react";
-
+import styles from "./SignIn.module.css";
 import { loginFirebase, googleLogin } from "../../utils/utilis";
 import { GoogleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
@@ -105,9 +105,14 @@ const SignIn = () => {
             </Form.Item>
             <div style={{ display: "flex", marginTop: 50, justifyContent: "space-between" }}>
               <Form.Item>
-                <Button shape="round" type="error" onClick={googleLogin}>
-                  <GoogleOutlined style={{ color: "orange" }} />
-                  Sign-in with Google
+                <Button
+                  className={styles.google_button}
+                  shape="round"
+                  type="error"
+                  onClick={googleLogin}
+                >
+                  <GoogleOutlined className={styles.googleOutlined} style={{ color: "orange" }} />
+                  <span className={styles.hidden}> Sign-in with Google</span>
                 </Button>
               </Form.Item>
               <Form.Item>

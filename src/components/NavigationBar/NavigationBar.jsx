@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { logoutFire } from "utils/utilis";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "Store";
+import img from "../../assets/logo.png";
 const { Header } = Layout;
 function NavigationBar() {
   const isAuth = useSelector((state) => state.isAuth);
@@ -24,7 +25,10 @@ function NavigationBar() {
           fontSize: "20px",
         }}
       >
-        <div style={{ color: "white" }}>Todo-List</div>
+        <div style={{ color: "white" }}>
+          <img style={{ width: 50, transform: "translate(0,-10%)" }} alt="anmol" src={img} />
+          <span>TodoList</span>
+        </div>
         <div
           style={{
             display: "flex",
