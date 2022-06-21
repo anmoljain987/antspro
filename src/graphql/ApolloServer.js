@@ -18,8 +18,9 @@ function ApolloServerComp({ children }) {
       dispatch(authActions.login());
     }
   }, [user, isAuth, dispatch]);
+
   const client = new ApolloClient({
-    uri: "https://todo-list-anmol.herokuapp.com/",
+    uri: process.env.REACT_APP_TEMP_URI,
     cache: new InMemoryCache(),
     headers: {
       authorization: localStorage.getItem("token"),
